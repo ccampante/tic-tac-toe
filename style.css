@@ -1,0 +1,275 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+
+:root {
+    --primary-color: #6c5ce7;
+    --secondary-color: #a29bfe;
+    --accent-color: #fd79a8;
+    --background-color: #dfe6e9;
+    --x-color: #e84393;
+    --o-color: #00b894;
+    --cell-bg: #ffffff;
+    --text-color: #2d3436;
+    --winner-bg: rgba(108, 92, 231, 0.1);
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    background: linear-gradient(135deg, var(--background-color), #c7ecee);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    color: var(--text-color);
+}
+
+.container {
+    background-color: white;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+    text-align: center;
+    max-width: 500px;
+    width: 100%;
+    transform: translateY(0);
+    animation: float 6s ease-in-out infinite;
+}
+
+@keyframes float {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+    100% { transform: translateY(0px); }
+}
+
+h1 {
+    color: var(--primary-color);
+    margin-bottom: 20px;
+    font-weight: 700;
+    font-size: 2.5rem;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.status {
+    font-size: 1.2rem;
+    margin-bottom: 25px;
+    font-weight: 600;
+    color: var(--secondary-color);
+    padding: 10px;
+    border-radius: 50px;
+    background-color: rgba(162, 155, 254, 0.1);
+    transition: all 0.3s ease;
+}
+
+.board {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 15px;
+    margin-bottom: 30px;
+    perspective: 1000px;
+}
+
+.cell {
+    background-color: var(--cell-bg);
+    border-radius: 15px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 3rem;
+    font-weight: bold;
+    height: 110px;
+    transition: all 0.3s ease;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    position: relative;
+    overflow: hidden;
+    transform-style: preserve-3d;
+}
+
+.cell:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0));
+    border-radius: 15px;
+    pointer-events: none;
+}
+
+.cell:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 20px rgba(0, 0, 0, 0.1);
+    background-color: rgba(108, 92, 231, 0.05);
+}
+
+.cell.x {
+    color: var(--x-color);
+    animation: pulse-x 0.5s ease-in-out;
+}
+
+.cell.o {
+    color: var(--o-color);
+    animation: pulse-o 0.5s ease-in-out;
+}
+
+@keyframes pulse-x {
+    0% { transform: scale(0.8); opacity: 0; }
+    50% { transform: scale(1.2); opacity: 0.5; }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+@keyframes pulse-o {
+    0% { transform: scale(0.8); opacity: 0; }
+    50% { transform: scale(1.2); opacity: 0.5; }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+.restart-button {
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    border: none;
+    border-radius: 50px;
+    color: white;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 600;
+    padding: 12px 30px;
+    margin-bottom: 25px;
+    transition: all 0.3s ease;
+    box-shadow: 0 5px 15px rgba(108, 92, 231, 0.3);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.restart-button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(108, 92, 231, 0.4);
+}
+
+.restart-button:active {
+    transform: translateY(1px);
+}
+
+.score {
+    display: flex;
+    justify-content: center;
+    gap: 50px;
+    margin-top: 20px;
+    padding: 15px;
+    background-color: rgba(108, 92, 231, 0.05);
+    border-radius: 15px;
+}
+
+.score-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 1.2rem;
+    font-weight: 600;
+    position: relative;
+}
+
+.score-item:first-child span:first-child {
+    color: var(--x-color);
+    font-size: 1.5rem;
+    margin-bottom: 5px;
+}
+
+.score-item:last-child span:first-child {
+    color: var(--o-color);
+    font-size: 1.5rem;
+    margin-bottom: 5px;
+}
+
+.score-item span:last-child {
+    background-color: white;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Winning animation */
+@keyframes winner {
+    0% { background-color: rgba(108, 92, 231, 0); }
+    50% { background-color: rgba(108, 92, 231, 0.2); }
+    100% { background-color: rgba(108, 92, 231, 0); }
+}
+
+.winner {
+    animation: winner 1.5s infinite;
+}
+
+/* Shake animation for invalid moves */
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    20%, 60% { transform: translateX(-5px); }
+    40%, 80% { transform: translateX(5px); }
+}
+
+.shake {
+    animation: shake 0.5s ease-in-out;
+}
+
+/* Draw animation */
+@keyframes draw {
+    0% { opacity: 1; }
+    50% { opacity: 0.5; }
+    100% { opacity: 1; }
+}
+
+.draw {
+    animation: draw 0.8s ease-in-out;
+}
+
+/* Score update animation */
+@keyframes score-update {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.5); }
+    100% { transform: scale(1); }
+}
+
+.score-update {
+    animation: score-update 0.5s ease-in-out;
+}
+
+/* Button click animation */
+.clicked {
+    transform: scale(0.95) !important;
+}
+
+/* Status celebration animation */
+@keyframes celebrate {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+}
+
+.celebrate {
+    animation: celebrate 0.5s ease-in-out;
+    font-weight: 700;
+}
+
+@media (max-width: 500px) {
+    .cell {
+        height: 90px;
+        font-size: 2.5rem;
+    }
+    
+    .container {
+        padding: 20px;
+        margin: 15px;
+    }
+    
+    h1 {
+        font-size: 2rem;
+    }
+}
